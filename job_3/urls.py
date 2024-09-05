@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('student.urls')),  # Подключение адресов student.
+    path('api/', include('drf.urls')),  # Подключение адресов drf.
 ]
