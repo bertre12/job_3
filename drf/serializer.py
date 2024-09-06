@@ -1,15 +1,23 @@
 from rest_framework import serializers
 
-from student.models import Student
+from student.models import Student, Level
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    level = serializers.CharField(source='level.name', read_only=True)
+    # Поле для отображения уровня доступа.
+    level_name = serializers.CharField(source='level.name', read_only=True)
+    # Поле для выбора уровня доступа при регистрации.
+    level = serializers.PrimaryKeyRelatedField(queryset=Level.objects.all(),
+                                               write_only=True)
 
     # Отображение данных.
     class Meta:
         model = Student
-        fields = ['id', 'name', 'password', 'level']  # Отображение
-        # выборочно.
-        # fields = '__all__'  # Отображение всех данных.
-
+        # Отображение выборочно.
+        fields = ['id', 'name', 'password', 'level', 'level_name']
+        # Поле для только записи данных, но не для отображения через API.
+        extra_kwargs = {
+            'level': {'write_only': True}
+        }
+        # Отображение всех данных.
+        # fields = '__all__'
