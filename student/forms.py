@@ -1,5 +1,5 @@
 from django import forms
-from .models import Level
+from .models import Level, Student
 
 
 # Форма отображения при входе пользователя.
@@ -14,3 +14,10 @@ class RegistrationForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
     level = forms.ModelChoiceField(queryset=Level.objects.all(),
                                    label='Уровень')
+
+
+# Форма отображения изменяемых данных.
+class EditForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['password', 'nickname_tg', 'nickname_inst']

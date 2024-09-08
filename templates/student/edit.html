@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0,
+          maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit</title>
+</head>
+<body>
+
+    <!-- Запрос на изменение существующих данных. -->
+    <form method="post">
+        <!-- Отображаем форму изменяемых данных. -->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить данные</button>
+    </form>
+
+    <!-- Ссылка возврата. -->
+    <a href="{% url 'private' %}">Назад к личному кабинету</a>
+
+</body>
+</html>

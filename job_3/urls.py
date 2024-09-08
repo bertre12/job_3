@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('student.urls')),  # Подключение адресов student.
     path('api/', include('drf.urls')),  # Подключение адресов drf.
+    path('api-auth/', include('rest_framework.urls')),  # вход/выход для
+    # админов.
 ]

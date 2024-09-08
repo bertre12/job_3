@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0,
+          maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Private</title>
+</head>
+<body>
+
+    <h1>Данные:</h1>
+        <!-- Данные пользователя. -->
+        <li> Имя - {{ student.name }}</li>
+        <li> Фото - {{ student.image }}</li>
+        <li> № телефона - {{ student.phone }}</li>
+        <li> Электронная почта - {{ student.email }}</li>
+        <li> Никнейм Telegram - {{ student.nickname_tg }}</li>
+        <li> Никнейм Instagram - {{ student.nickname_inst }}</li>
+        <li> № группы - {{ student.group_number }}</li>
+        <li> Количество баллов - {{ student.balance }}</li>
+        <li> Статус - {{ student.status }}</li>
+        <li> Пакет услуг - {{ student.service }}</li>
+        <li> Стажировка - {{ student.internship }}</li>
+        <li> Уровень доступа - {{ student.level }}</li>
+
+    <!-- Ссылка для выхода и редактирования. -->
+    <a href="{% url 'logout' %}">Выйти</a>
+    <a href="{% url 'edit' %}">Редактировать</a>
+
+</body>
+</html>

@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Student
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, EditForm
 from django.contrib.auth.hashers import check_password
 
 
@@ -20,8 +18,10 @@ def login_view(request):
 
                 # Проверка пароля.
                 if check_password(password, student.password):
+                    # Сохраняем данные о пользователе в сессии.
+                    request.session['student_id'] = student.id
                     # Перенаправление после успешного входа.
-                    return redirect('home')
+                    return redirect('private')
                 else:
                     form.add_error(None, 'Неверные учетные данные.')
 
@@ -32,11 +32,6 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'student/login.html', {'form': form})
-
-
-# Страница приветствия после успешного входа.
-def home(request):
-    return HttpResponse('<h1> Вход на сайт <h1>')
 
 
 # Регистрация нового пользователя.
@@ -66,3 +61,40 @@ def register_view(request):
     return render(request, 'student/register.html', {'form': form})
 
 
+# Отображение данных студента после входа.
+def private_view(request):
+    # Получаем id студента из сессии.
+    student_id = request.session.get('student_id')
+    # Получаем информацию о студенте
+    student = get_object_or_404(Student, id=student_id)
+
+    return render(request, 'student/private.html', {'student': student})
+
+
+# Изменение данных студента.
+def edit_view(request):
+    # Получаем id студента из сессии.
+    student_id = request.session.get('student_id')
+    # Получаем информацию о студенте.
+    student = get_object_or_404(Student, id=student_id)
+
+    if request.method == 'POST':
+        form = EditForm(request.POST, instance=student)
+        if form.is_valid():
+            # Сохранение изменений.
+            form.save()
+            # Перенаправление на личный кабинет после сохранения.
+            return redirect('private')
+    else:
+        form = EditForm(instance=student)
+
+    return render(request, 'student/edit.html', {'form': form})
+
+
+# Выход пользователя.
+def logout_view(request):
+    if 'student_id' in request.session:
+        # Удаляем id студента из сессии.
+        del request.session['student_id']
+    # Перенаправляем на страницу входа.
+    return redirect('login')
