@@ -15,9 +15,16 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         # Отображение выборочно.
         fields = ['id', 'name', 'password', 'level', 'level_name']
-        # Поле для только записи данных, но не для отображения через API.
+        # Поле только для записи данных, но не для отображения через API.
         extra_kwargs = {
             'level': {'write_only': True}
         }
         # Отображение всех данных.
         # fields = '__all__'
+
+
+class StudentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        # Поля для редактирования.
+        fields = ['password', 'nickname_tg', 'nickname_inst', 'status']

@@ -31,7 +31,13 @@ class Student(models.Model):
     group_number = models.CharField(max_length=255, verbose_name='№ группы')
     balance = models.IntegerField(default=0,
                                   verbose_name='Количество баллов')
-    status = models.CharField(max_length=100, verbose_name='Статус')
+    status = models.CharField(max_length=100, verbose_name='Статус',
+                              choices=[
+                                  ('Учится', 'Учится'),
+                                  ('В академ. отпуске', 'В академ. отпуске'),
+                                  ('Возврат', 'Возврат'),
+                                  ('Закончил обучение', 'Закончил обучение')
+                              ])
     service = models.CharField(max_length=255, verbose_name='Пакет услуг')
     internship = models.CharField(max_length=255, verbose_name='Стажировка')
     level = models.ForeignKey('Level', on_delete=models.CASCADE, blank=True,

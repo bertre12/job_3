@@ -20,4 +20,4 @@ class RegistrationForm(forms.Form):
 class EditForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['password', 'nickname_tg', 'nickname_inst']
+        fields = ['password', 'nickname_tg', 'nickname_inst', 'status']

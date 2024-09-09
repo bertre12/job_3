@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 
-from drf.serializer import StudentSerializer
+from drf.serializer import StudentSerializer, StudentUpdateSerializer
 from student.models import Student
 
 
@@ -29,3 +29,10 @@ class CreateStudentView(generics.CreateAPIView):
         # Хэширование пароля.
         student.password = make_password(student.password)
         student.save()
+
+
+# Изменение данных.
+class UpdateStudentView(generics.UpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentUpdateSerializer
+    lookup_field = 'pk'
